@@ -2,6 +2,10 @@
 namespace redcat\Datastores;
 
 
+use redcat\Exceptions\ValidationException;
+use redcat\Factories\Validator;
+use redcat\Validators\HeaderValidator;
+
 class Spreadsheet
 {
     /**
@@ -15,7 +19,17 @@ class Spreadsheet
 
     public function __construct(array $data)
     {
-        $this->headers = array_pop(array_reverse($data));
+        $headerData = array_reverse($data);
+        $this->headers = array_pop($headerData);
+        $this->headers = array_map(function($value){
+            return strtolower(
+                str_replace(' ','_',
+                    trim($value)
+                )
+            );
+        }, $this->headers);
+        $validator = new Validator($this);
+        $validator->validate(HeaderValidator::class, $this->headers);
         unset($data[0]);
         $this->values = array_values($data);
     }
@@ -30,12 +44,21 @@ class Spreadsheet
         return $this->values;
     }
 
-    public function addColumn(string $rule): void
+    public function addColumn($name, $values): void
     {
-        foreach($this->values as $key => $row)
-        {
-            $actions = explode(' ', $rule);
-            $newValue = '';
+        $this->headers[] = $name;
+        $i=0;
+        foreach ($this->values as &$row){
+            $row[] = $values[$i];
+            $i++;
         }
+    }
+
+    public function has(string $string): bool
+    {
+        if (isset($this->headers[$string])) {
+            return true;
+        }
+        return false;
     }
 }

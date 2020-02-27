@@ -4,7 +4,6 @@ include_once '../vendor/autoload.php';
 define('ROOT_PATH', dirname(__DIR__));
 session_start();
 $router = new \redcat\Controllers\BaseController();
-
 try {
     if (count($_FILES)) {
         $router->uploadCsv($_FILES['csvFile']['tmp_name']);
@@ -17,7 +16,7 @@ try {
     switch ($_REQUEST['action']??'') {
         case 'addColumn':
             //TODO: request sanitization and handler
-            $router->addColumn($_REQUEST['column_definition']);
+            $router->addColumn($_REQUEST['name'], $_REQUEST['rule']);
             break;
         case 'deleteColumn':
             //TODO: future functionality
@@ -34,5 +33,6 @@ try {
             $router->drawDatatable();
     }
 }catch(Exception $e){
-
+    $_SESSION['errors'] = 'An unknown error has occured: ' . $e->getMessage();
+    $router->restart();
 }

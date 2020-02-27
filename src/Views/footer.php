@@ -1,3 +1,33 @@
+    </div>
+    </div>
+    <div class="modal" tabindex="-1" role="dialog" id="helpModal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <form method=GET id="columnForm">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            Help
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            When adding a new column, make sure to use only the mathmatic operations +, -, *, and /. as well as the concatination operator &<br><br>
+                            In order to assure accuracy please use brackets () to enclose mathmatic operations and all strings are enclosed with double quotes ""  <br><br>
+                            Example: product & " sales in " & city & " were " & sales <br>
+                            or <br>
+                            "Gross income for the month of " & month & " was " & ( units * price )
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     </body>
     <footer>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
