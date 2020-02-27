@@ -15,18 +15,15 @@ try {
 
     switch ($_REQUEST['action']??'') {
         case 'addColumn':
-            //TODO: request sanitization and handler
             $router->addColumn($_REQUEST['name'], $_REQUEST['rule']);
             break;
         case 'deleteColumn':
             //TODO: future functionality
             break;
         case 'uploadCsv':
-            //TODO: upload handler
             $router->uploadCsv($_FILES['csvFile']['tmp_name']);
             break;
         case 'restart':
-            //TODO: extended user and user-input handler
             $router->restart();
             break;
         default:
