@@ -32,12 +32,14 @@
     <div class="row">
         <div class="col-2">
             <ul>
+                <?php if(isset($_SESSION['spreadsheet'])){ ?>
                 <li>
                     <a href="#" data-toggle="modal" data-target="#columnModal">Add Column</a>
                 </li>
                 <li>
                     <a href="/index.php?action=restart">Restart</a>
                 </li>
+                <?php } ?>
                 <li>
                     <a href="#" data-toggle="modal" data-target="#helpModal">Help</a>
                 </li>
