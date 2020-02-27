@@ -15,7 +15,6 @@
                     <div class="modal-body">
                         <p>
                             When adding a new column, make sure to use only the mathmatic operations +, -, *, and /. as well as the concatination operator &<br><br>
-                            In order to assure accuracy please use brackets () to enclose mathmatic operations and all strings are enclosed with double quotes ""  <br><br>
                             Example: product & " sales in " & city & " were " & sales <br>
                             or <br>
                             "Gross income for the month of " & month & " was " & ( units * price )

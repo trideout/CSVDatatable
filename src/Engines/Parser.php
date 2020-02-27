@@ -65,6 +65,7 @@ class Parser
         }
         $output .= ';';
         try {
+            $output = preg_replace('/([0-9\.]+[\\+\\-\\*\\/]{1}[0-9\.][\\+\\-\\*\\/]{1}[0-9]+)/', '( $1 )', $output);
             return (string)eval($output);
         }catch(\Exception $e){
             throw new ValidationException('Unable to process new column. Please verify that the rule is in the correct format.');
