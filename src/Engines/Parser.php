@@ -4,10 +4,13 @@ namespace redcat\Engines;
 use redcat\Datastores\Spreadsheet;
 use redcat\Exceptions\ValidationException;
 use redcat\Factories\Validator;
+use redcat\Traits\EvalCalculator;
 use redcat\Validators\FormulaValidator;
 
 class Parser
 {
+    use EvalCalculator;
+
     private $spreadsheet;
     private $rule;
     /**
@@ -38,37 +41,5 @@ class Parser
             $column[] = $this->calculateRow($components, $row);
         }
         $this->spreadsheet->addColumn($this->name, $column);
-    }
-
-    public function calculateRow($components, $row)
-    {
-        $output = 'return ';
-        $headerKeys = array_flip($this->spreadsheet->getHeaders());
-        foreach ($components as $component) {
-            if (in_array($component, ['+', '-', '/', '*', '(', ')'])) {
-                $output .= $component;
-                continue;
-            }
-            if ($component === '&') {
-                $output .= ' . ';
-                continue;
-            }
-            if(isset($headerKeys[$component])){
-                if(!is_numeric($row[$headerKeys[$component]])){
-                    $output .= '"' . $row[$headerKeys[$component]] . '"';
-                }else {
-                    $output .= $row[$headerKeys[$component]];
-                }
-                continue;
-            }
-            $output .= $component;
-        }
-        $output .= ';';
-        try {
-            $output = preg_replace('/([0-9\.]+[\\+\\-\\*\\/]{1}[0-9\.][\\+\\-\\*\\/]{1}[0-9]+)/', '( $1 )', $output);
-            return (string)eval($output);
-        }catch(\Exception $e){
-            throw new ValidationException('Unable to process new column. Please verify that the rule is in the correct format.');
-        }
     }
 }
